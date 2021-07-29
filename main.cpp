@@ -8,11 +8,9 @@
 #include <ctime>
 #include "steggra.cpp"
 #include <list>
-#include <vector>
-#include <CL/cl.hpp>
 
-#define LENGTH 480
-#define WIDTH 640
+#define LENGTH 480 // Y-Pixelanzahl
+#define WIDTH 640 // X-Pixelanzahl
 
 int main()
 {
@@ -42,6 +40,7 @@ int main()
                *(*(*(info+y)+x)+z)=(uint8_t)inf.at<cv::Vec3b>(y,x)[z];
             }
 
+    //---encrypt Magic-Cube-Algorithmus--//
     std::cout<<"magic_cube: start" <<std::endl;
     auto start3 = std::chrono::system_clock::now();
     magic_cube(&info);
@@ -53,6 +52,7 @@ int main()
     cv::Mat infoMC_m = cv::Mat(LENGTH,WIDTH,CV_8UC3,&info);
     cv::imwrite("-Data Hiding- infoMC.png",infoMC_m);
 
+    //---Embedder--//
     std::cout<<"hide: start" <<std::endl;
     auto start = std::chrono::system_clock::now();
     hide( &image,  &info,  key,  Wscreen,  Lscreen);
@@ -65,6 +65,7 @@ int main()
     cv::Mat hidedata_m2 = cv::Mat(LENGTH<<1,WIDTH<<1,CV_8UC3,&image);
     cv::imwrite("-Data Hiding-medium.png",hidedata_m2);
 
+    //---Detector--//
     std::cout<<"find: start" <<std::endl;
     auto start2 = std::chrono::system_clock::now();
     find( &image,  &result,  key,  Wscreen,  Lscreen);
@@ -77,21 +78,8 @@ int main()
     cv::Mat result_m = cv::Mat(LENGTH,WIDTH,CV_8UC3,&result);
     cv::imwrite("-Data Hiding- result.png",result_m);
 
-    /*auto start3 = std::chrono::system_clock::now();
-    std::vector<std::vector<std::vector< int>>> v(LENGTH, std::vector<std::vector< int>>(WIDTH, std::vector< int>(3)));
-    std::test(v);
-
-    for(y=0;y<LENGTH;++y)
-        for(x=0;x<WIDTH;++x)
-        	for(z=0;z<24;z++)
-    			v[y][x][z]=z-((z/8)*8);
-
-
-
-    auto end3 = std::chrono::system_clock::now();
-    std::chrono::duration<double> elapsed_seconds3 = end3-start3;
-    printf("time-test : ready %f s\n", elapsed_seconds3.count());*/
-
+    //---decrypt Magic-Cube-Algorithmus--//
+    //fehlt noch
 
     return 0;
 }

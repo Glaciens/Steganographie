@@ -41,6 +41,7 @@ int main()
             }
 
     //---encrypt Magic-Cube-Algorithmus--//
+    /*
     std::cout<<"magic_cube: start" <<std::endl;
     auto start3 = std::chrono::system_clock::now();
     magic_cube(&info);
@@ -51,6 +52,7 @@ int main()
 
     cv::Mat infoMC_m = cv::Mat(LENGTH,WIDTH,CV_8UC3,&info);
     cv::imwrite("-Data Hiding- infoMC.png",infoMC_m);
+    */
 
     //---Embedder--//
     std::cout<<"hide: start" <<std::endl;
